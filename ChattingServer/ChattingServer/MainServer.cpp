@@ -19,6 +19,7 @@ SOCKADDR_IN client = {};
 
 set<SOCKET> clientSock; //커넥션된 소켓들이 들어있다. => 채팅방
 map<SOCKET, thread> clientThread;
+map<int, string> clientNicknames; // 참여 중인 클라이언트들
 
 
 //Client Socket을 받는다.

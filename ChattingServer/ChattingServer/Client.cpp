@@ -31,7 +31,7 @@ void proc_recv()
 
 int main()
 {
-	std::cout << "서버에서 사용할 닉네임을 입력해주세요!\n";
+	std::cout << "Please Put in your nickname \n";
 	std::cin >> nickName;
 
 	//WSADATA 윈도우 소켓 구조체이다.
@@ -57,7 +57,7 @@ int main()
 
 	//미리 다 winsock2.h 에 지정되어있는 매크로들이다.
 	sListen = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-
+	cout << "Create Socket" << '\n';
 
 
 	//SOCKADDR_IN => 소켓 구성요소를 담아야 한다. 필수적으로 IP와 PORT 번호가 있다.
@@ -78,10 +78,15 @@ int main()
 	//기본으로 정해진 포트를 제외한 포트번호를 설정해야 한다.
 	//htos (host to network short)의 약자
 	addr.sin_port = htons(4567);
+	cout << "you're trying to send packet to" << addr.sin_port << '\n';
 
 	//sin_addr : 호스트 IP주소 (로컬이다) 일반적으로 서버가 동작되는 컴퓨터의 IP 주소로 한다.
 	//inet_addr은 string을 ipv4로 바꿔준다(IN_ADDR에 맞추어)
+
+	//이 부분이 에러가 뜰 때가 있는데 => SDL 검사를 아니오로 하면 된다.
 	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	cout << "you're trying to send packet to" << addr.sin_addr.s_addr << '\n';
+
 
 	//htonl은 32-bit 호스트 숫자를 TCP/IP네트워크 바이트오더(Big-Endian)에 맞게 변환시켜준다.
 	//addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -105,7 +110,6 @@ int main()
 	{
 		//소캣에러가 발생중이지 않을때
 		//메세지 입력
-
 		std::cin >> buffer;
 		string msg = "";
 		msg += nickName;
@@ -114,6 +118,8 @@ int main()
 
 		send(sListen, msg.c_str(), strlen(msg.c_str()), 0);
 	}
+
+	cout << "Socket Connection Error break out \n";
 	proc1.join();
 
 	closesocket(sListen);
