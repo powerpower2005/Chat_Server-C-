@@ -83,7 +83,6 @@ int main()
 	//sin_addr : 호스트 IP주소 (로컬이다) 일반적으로 서버가 동작되는 컴퓨터의 IP 주소로 한다.
 	//inet_addr은 string을 ipv4로 바꿔준다(IN_ADDR에 맞추어)
 
-	//이 부분이 에러가 뜰 때가 있는데 => SDL 검사를 아니오로 하면 된다.
 	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	cout << "you're trying to send packet to" << addr.sin_addr.s_addr << '\n';
 
